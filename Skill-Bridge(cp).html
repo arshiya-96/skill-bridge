@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Skill Bridge – Learn Together, Grow Together</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ========== DESIGN TOKENS (navy / royal blue / cyan) ========== */
+:root{
+  --navy:#0b1f4d;--royal:#2457e6;--cyan:#12c6e8;
+  --bg:#f4f7fd;--card:#ffffff;--text:#13203f;--muted:#5b6785;--line:#e3e9f6;
+  --shadow:0 6px 24px rgba(11,31,77,.08);--shadow-h:0 14px 34px rgba(36,87,230,.18);
+  --grad:linear-gradient(135deg,var(--royal),var(--cyan));
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1330;--card:#122049;--text:#eaf0ff;--muted:#a3b1d6;--line:#22336b;--shadow:0 6px 24px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{--bg:#0a1330;--card:#122049;--text:#eaf0ff;--muted:#a3b1d6;--line:#22336b;--shadow:0 6px 24px rgba(0,0,0,.35)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--navy);z-index:60}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;line-height:1.2;margin:0}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* ========== NAVBAR ========== */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--navy);color:#fff;box-shadow:0 2px 14px rgba(0,0,0,.2)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-family:Poppins,sans-serif;font-weight:700;font-size:1.2rem}
+.logo svg{width:34px;height:34px}.logo span b{color:var(--cyan)}
+nav ul{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+nav a{display:block;padding:8px 16px;border-radius:999px;font-weight:500;font-size:.95rem;color:#cfdaff;transition:.2s}
+nav a:hover{background:rgba(255,255,255,.1);color:#fff}
+nav a.active{background:var(--grad);color:#fff}
+.burger{display:none;background:none;border:0;color:#fff;font-size:1.6rem;cursor:pointer}
+@media(max-width:720px){
+  .burger{display:block}
+  nav{position:absolute;left:0;right:0;top:64px;background:var(--navy);display:none;padding:8px 20px 16px}
+  nav.open{display:block}nav ul{flex-direction:column}
+}
+
+/* ========== PAGES ========== */
+.page{display:none;animation:fade .35s ease}.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+section.block{padding:48px 0}
+.title{font-size:clamp(1.5rem,3.5vw,2.1rem);color:var(--navy)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .title{color:#fff}}
+.sub{color:var(--muted);margin:6px 0 28px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--navy),#16348f 60%,#0e7ea8);color:#fff;padding:72px 0 90px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-80px;top:-80px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(18,198,232,.45),transparent 70%)}
+.hero h1{font-size:clamp(2rem,6vw,3.5rem);max-width:640px;position:relative;z-index:1}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:560px;color:#d3defa;font-size:1.08rem;margin:18px 0 30px;position:relative;z-index:1}
+.btns{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font:600 .95rem Inter,sans-serif;padding:12px 24px;border-radius:12px;transition:.2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--grad);color:#fff;box-shadow:0 8px 20px rgba(18,198,232,.35)}
+.btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35)}
+.btn.sm{padding:9px 18px;font-size:.88rem;border-radius:10px}
+.btn.outline{background:transparent;color:var(--royal);border:1.5px solid var(--royal)}
+.btn[disabled]{opacity:.65;cursor:default;transform:none;box-shadow:none}
+.btn.done{background:#e6f9f1;color:#0b8a5a;border:0}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:-50px;position:relative;z-index:2}
+.stat{background:var(--card);border-radius:18px;padding:22px;text-align:center;box-shadow:var(--shadow);transition:.25s}
+.stat:hover{transform:translateY(-4px);box-shadow:var(--shadow-h)}
+.stat b{display:block;font:700 2rem Poppins,sans-serif;color:var(--royal)}
+.stat span{color:var(--muted);font-size:.9rem}
+@media(max-width:520px){.stats{gap:8px}.stat{padding:14px 6px}.stat b{font-size:1.4rem}.stat span{font-size:.75rem}}
+
+/* Cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:20px}
+.card{background:var(--card);border-radius:18px;padding:22px;box-shadow:var(--shadow);border:1px solid var(--line);display:flex;flex-direction:column;gap:12px;transition:.25s}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-h)}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.ico{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,rgba(36,87,230,.14),rgba(18,198,232,.2));display:grid;place-items:center;font-size:1.4rem}
+.card h3{font-size:1.1rem;color:var(--text)}
+.card p{margin:0;color:var(--muted);font-size:.92rem;flex:1}
+.tag{font-size:.74rem;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(36,87,230,.1);color:var(--royal)}
+.tag.Beginner{background:#e6f9f1;color:#0b8a5a}.tag.Intermediate{background:#fff4e0;color:#b36b00}.tag.Advanced{background:#fde8ee;color:#c0254f}
+.card .foot{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid var(--line);padding-top:14px}
+.who{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:500}
+.av{width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-size:.8rem;font-weight:700;flex:none}
+.meta{font-size:.78rem;color:var(--muted)}
+
+/* Explore controls */
+.search{width:100%;padding:14px 18px 14px 46px;border-radius:14px;border:1.5px solid var(--line);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='%232457e6' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") 16px center no-repeat;color:var(--text);font:inherit}
+.search:focus,.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--royal);box-shadow:0 0 0 4px rgba(36,87,230,.15)}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 26px}
+.chip{border:1.5px solid var(--line);background:var(--card);color:var(--text);padding:8px 16px;border-radius:999px;cursor:pointer;font:500 .88rem Inter,sans-serif;transition:.2s}
+.chip:hover{border-color:var(--royal);color:var(--royal)}
+.chip.on{background:var(--royal);border-color:var(--royal);color:#fff}
+.empty{text-align:center;padding:48px 20px;color:var(--muted);background:var(--card);border-radius:18px;border:1.5px dashed var(--line)}
+
+/* Form */
+.formcard{max-width:660px;margin:0 auto;background:var(--card);border-radius:22px;padding:32px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:560px){.row{grid-template-columns:1fr}.formcard{padding:22px}}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.field label{font-weight:600;font-size:.88rem}
+.field input,.field select,.field textarea{padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--text);font:inherit}
+.field textarea{min-height:110px;resize:vertical}
+
+/* Profile */
+.phead{display:flex;align-items:center;gap:20px;flex-wrap:wrap;background:var(--card);border-radius:22px;padding:28px;box-shadow:var(--shadow);border:1px solid var(--line);margin-bottom:24px}
+.phead .av{width:76px;height:76px;font-size:2rem}
+.phead form{display:flex;gap:10px;flex-wrap:wrap}
+.phead input{padding:10px 14px;border-radius:10px;border:1.5px solid var(--royal);background:var(--bg);color:var(--text);font:inherit}
+.pstats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.pstats .stat{box-shadow:var(--shadow)}
+
+/* Toast */
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,120px);background:var(--navy);color:#fff;padding:14px 24px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.3);border-left:5px solid var(--cyan);transition:.35s;z-index:100;max-width:90vw;font-weight:500}
+#toast.show{transform:translate(-50%,0)}
+footer{text-align:center;color:var(--muted);padding:32px 20px;font-size:.88rem}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#home" aria-label="Skill Bridge home">
+      <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="11" fill="url(#g)"/><path d="M7 27c4-10 22-10 26 0M12 27v-6m8 6v-9m8 9v-6M5 28h30" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><defs><linearGradient id="g" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#2457e6"/><stop offset="1" stop-color="#12c6e8"/></linearGradient></defs></svg>
+      <span>Skill<b>Bridge</b></span>
+    </a>
+    <button class="burger" id="burger" aria-label="Toggle menu">☰</button>
+    <nav id="nav"><ul>
+      <li><a href="#home" data-link="home">Home</a></li>
+      <li><a href="#explore" data-link="explore">Explore Skills</a></li>
+      <li><a href="#add" data-link="add">Add a Skill</a></li>
+      <li><a href="#profile" data-link="profile">My Profile</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<div class="page" id="page-home">
+  <div class="hero"><div class="wrap">
+    <h1>Your Skills. <em>Someone’s Next Step.</em></h1>
+    <p>Skill Bridge is a peer-to-peer learning platform where college students teach what they know, learn what they don’t, and grow together as a community.</p>
+    <div class="btns">
+      <a class="btn primary" href="#explore">🔍 Explore Skills</a>
+      <a class="btn ghost" href="#add">＋ Share a Skill</a>
+    </div>
+  </div></div>
+  <div class="wrap">
+    <div class="stats" id="stats"></div>
+    <section class="block">
+      <h2 class="title">Featured popular skills</h2>
+      <p class="sub">The most-connected skills on campus right now.</p>
+      <div class="grid" id="featured"></div>
+    </section>
+  </div>
+</div>
+
+<!-- EXPLORE -->
+<div class="page" id="page-explore"><div class="wrap"><section class="block">
+  <h2 class="title">Explore Skills</h2>
+  <p class="sub">Search by skill, category or student name, then connect to start learning.</p>
+  <input class="search" id="search" type="search" placeholder="Search skills, categories or students…" aria-label="Search skills">
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="skillGrid"></div>
+</section></div></div>
+
+<!-- ADD -->
+<div class="page" id="page-add"><div class="wrap"><section class="block">
+  <h2 class="title" style="text-align:center">Share a Skill</h2>
+  <p class="sub" style="text-align:center">Teach something you know. It appears in Explore instantly.</p>
+  <form class="formcard" id="skillForm" novalidate>
+    <div class="field"><label for="fName">Skill name</label><input id="fName" required maxlength="50" placeholder="e.g. React Basics"></div>
+    <div class="row">
+      <div class="field"><label for="fCat">Category</label><select id="fCat" required></select></div>
+      <div class="field"><label for="fLevel">Proficiency level</label>
+        <select id="fLevel" required><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div>
+    </div>
+    <div class="field"><label for="fStudent">Student name</label><input id="fStudent" required maxlength="40" placeholder="Your name"></div>
+    <div class="field"><label for="fDesc">What can you teach?</label><textarea id="fDesc" required maxlength="300" placeholder="Describe what others will learn from you…"></textarea></div>
+    <button class="btn primary" type="submit" style="width:100%;justify-content:center">🚀 Publish Skill</button>
+  </form>
+</section></div></div>
+
+<!-- PROFILE -->
+<div class="page" id="page-profile"><div class="wrap"><section class="block" id="profileBox"></section></div></div>
+</main>
+
+<footer>Skill Bridge · Learn Together, Grow Together</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   DATA LAYER
+   All reads/writes go through `Repo`. To add a backend later, replace the
+   bodies of load()/save() (or make them async fetch() calls) — the UI
+   code below doesn't need to change.
+   ===================================================================== */
+const KEY = 'skillbridge:v1';
+const CATS = ['Programming', 'Design', 'Data', 'Communication', 'Productivity'];
+const ICON = {Programming:'💻', Design:'🎨', Data:'📊', Communication:'🎤', Productivity:'⚡'};
+
+// Demo data. `owner:'me'` marks skills published by the current user.
+const seed = () => ({
+  user: {name: 'Guest Student'},
+  connections: [],               // ids of skills the user connected to
+  skills: [
+    {id:'s1', name:'Python Programming', category:'Programming', level:'Intermediate', student:'Aarav Mehta', description:'Learn Python fundamentals, loops, functions and build small automation scripts.', connects:42},
+    {id:'s2', name:'Java Programming', category:'Programming', level:'Advanced', student:'Riya Sharma', description:'Object-oriented design, collections and problem solving for placements.', connects:31},
+    {id:'s3', name:'UI/UX Design', category:'Design', level:'Intermediate', student:'Kabir Nair', description:'Wireframes, Figma prototypes and design thinking for real student projects.', connects:38},
+    {id:'s4', name:'Public Speaking', category:'Communication', level:'Beginner', student:'Meera Iyer', description:'Beat stage fear, structure a talk and deliver confident presentations.', connects:27},
+    {id:'s5', name:'Excel Basics', category:'Productivity', level:'Beginner', student:'Rohan Das', description:'Formulas, pivot tables and charts to organise assignments and data.', connects:24},
+    {id:'s6', name:'Data Analysis', category:'Data', level:'Intermediate', student:'Sana Khan', description:'Clean, explore and visualise datasets using pandas and simple statistics.', connects:35}
+  ]
+});
+
+const Repo = {
+  load() {
+    try { const raw = localStorage.getItem(KEY); if (raw) return JSON.parse(raw); } catch (e) {}
+    return seed();
+  },
+  save(state) { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+};
+
+let state = Repo.load();
+const ui = {q: '', cat: 'All', editingName: false};
+
+/* ===================== HELPERS ===================== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const initial = n => (n.trim()[0] || '?').toUpperCase();
+const uid = () => 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const commit = () => Repo.save(state);
+
+let toastTimer;
+function toast(msg) {                       // success notification
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ===================== COMPONENTS ===================== */
+// One reusable skill card. `showConnect` is false on the profile page.
+function skillCard(s, showConnect = true) {
+  const mine = s.owner === 'me';
+  const connected = state.connections.includes(s.id);
+  let action = '';
+  if (showConnect) {
+    action = mine ? '<button class="btn sm done" disabled>Your skill</button>'
+      : connected ? '<button class="btn sm done" disabled>✓ Connected</button>'
+      : `<button class="btn sm primary" data-connect="${s.id}">Connect</button>`;
+  }
+  return `<article class="card">
+    <div class="top"><div class="ico">${ICON[s.category] || '✨'}</div><span class="tag ${esc(s.level)}">${esc(s.level)}</span></div>
+    <div><h3>${esc(s.name)}</h3><span class="meta">${esc(s.category)} · ${s.connects} connection${s.connects === 1 ? '' : 's'}</span></div>
+    <p>${esc(s.description)}</p>
+    <div class="foot"><div class="who"><span class="av">${initial(s.student)}</span>${esc(s.student)}</div>${action}</div>
+  </article>`;
+}
+
+/* ===================== PAGE RENDERERS ===================== */
+function renderHome() {
+  const total = state.skills.reduce((n, s) => n + s.connects, 0);
+  const areas = new Set(state.skills.map(s => s.category)).size;
+  $('#stats').innerHTML = [[state.skills.length, 'Skills shared'], [total, 'Connections made'], [areas, 'Learning areas']]
+    .map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
+  const top = [...state.skills].sort((a, b) => b.connects - a.connects).slice(0, 3);
+  $('#featured').innerHTML = top.map(s => skillCard(s)).join('');
+}
+
+function renderChips() {
+  $('#chips').innerHTML = ['All', ...CATS].map(c =>
+    `<button class="chip ${ui.cat === c ? 'on' : ''}" data-cat="${c}">${c === 'All' ? 'All' : ICON[c] + ' ' + c}</button>`).join('');
+}
+
+// Re-renders only the grid so the search box keeps focus while typing.
+function renderGrid() {
+  const q = ui.q.trim().toLowerCase();
+  const list = state.skills.filter(s =>
+    (ui.cat === 'All' || s.category === ui.cat) &&
+    (!q || [s.name, s.category, s.student].some(v => v.toLowerCase().includes(q))));
+  $('#skillGrid').innerHTML = list.length ? list.map(s => skillCard(s)).join('')
+    : '<div class="empty" style="grid-column:1/-1">😕 No skills match your search. Try another keyword or category.</div>';
+}
+
+function renderProfile() {
+  const mine = state.skills.filter(s => s.owner === 'me');
+  const areas = new Set(mine.map(s => s.category)).size;
+  const nameBlock = ui.editingName
+    ? `<form id="nameForm"><input id="nameInput" value="${esc(state.user.name)}" maxlength="40" aria-label="Display name" required>
+         <button class="btn sm primary" type="submit">Save</button><button class="btn sm outline" type="button" data-act="cancel">Cancel</button></form>`
+    : `<h2 class="title">${esc(state.user.name)}</h2><button class="btn sm outline" data-act="edit" style="margin-top:8px">✏️ Edit display name</button>`;
+  $('#profileBox').innerHTML = `
+    <div class="phead"><div class="av">${esc(initial(state.user.name))}</div><div>${nameBlock}</div></div>
+    <div class="pstats">
+      <div class="stat"><b>${mine.length}</b><span>Skills shared</span></div>
+      <div class="stat"><b>${state.connections.length}</b><span>Connections</span></div>
+      <div class="stat"><b>${areas}</b><span>Areas taught</span></div>
+    </div>
+    <h2 class="title">My shared skills</h2><p class="sub">Skills you’ve published for other students.</p>
+    <div class="grid">${mine.length ? mine.map(s => skillCard(s, false)).join('')
+      : '<div class="empty" style="grid-column:1/-1">You haven’t shared a skill yet. <br><br><a class="btn sm primary" href="#add">Share your first skill</a></div>'}</div>`;
+  if (ui.editingName) $('#nameInput').focus();
+}
+
+/* ===================== ROUTER (hash based) ===================== */
+const PAGES = ['home', 'explore', 'add', 'profile'];
+function route() {
+  const p = location.hash.slice(1);
+  const page = PAGES.includes(p) ? p : 'home';
+  PAGES.forEach(n => $('#page-' + n).classList.toggle('active', n === page));
+  document.querySelectorAll('[data-link]').forEach(a => a.classList.toggle('active', a.dataset.link === page));
+  $('#nav').classList.remove('open');
+  if (page === 'home') renderHome();
+  if (page === 'explore') { renderChips(); renderGrid(); }
+  if (page === 'add' && !$('#fStudent').value) $('#fStudent').value = state.user.name;
+  if (page === 'profile') { ui.editingName = false; renderProfile(); }
+  window.scrollTo(0, 0);
+}
+addEventListener('hashchange', route);
+
+/* ===================== EVENTS ===================== */
+$('#burger').onclick = () => $('#nav').classList.toggle('open');
+$('#search').oninput = e => { ui.q = e.target.value; renderGrid(); };
+$('#fCat').innerHTML = CATS.map(c => `<option>${c}</option>`).join('');
+
+// Delegated clicks: Connect buttons, category chips, profile actions
+document.addEventListener('click', e => {
+  const conn = e.target.closest('[data-connect]');
+  if (conn) {
+    const id = conn.dataset.connect;
+    const skill = state.skills.find(s => s.id === id);
+    if (!skill || state.connections.includes(id)) return toast('You’re already connected to this skill.'); // no duplicates
+    state.connections.push(id); skill.connects++; commit();
+    toast(`🎉 Connected with ${skill.student} for ${skill.name}!`);
+    route();
+    return;
+  }
+  const chip = e.target.closest('[data-cat]');
+  if (chip) { ui.cat = chip.dataset.cat; renderChips(); renderGrid(); return; }
+  const act = e.target.closest('[data-act]');
+  if (act) { ui.editingName = act.dataset.act === 'edit'; renderProfile(); }
+});
+
+// Publish a new skill
+$('#skillForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = id => $(id).value.trim();
+  const [name, student, description] = [v('#fName'), v('#fStudent'), v('#fDesc')];
+  if (!name || !student || !description) return toast('⚠️ Please fill in all the fields.');
+  state.skills.unshift({id: uid(), name, category: $('#fCat').value, level: $('#fLevel').value,
+    student, description, connects: 0, owner: 'me'});
+  commit();
+  e.target.reset(); ui.cat = 'All'; ui.q = ''; $('#search').value = '';
+  toast(`✅ “${name}” is now live in Explore Skills!`);
+  location.hash = '#explore';
+});
+
+// Edit display name (submit handler is delegated because the form is re-rendered)
+document.addEventListener('submit', e => {
+  if (e.target.id !== 'nameForm') return;
+  e.preventDefault();
+  const name = $('#nameInput').value.trim();
+  if (!name) return;
+  state.user.name = name; ui.editingName = false; commit();
+  $('#fStudent').value = name;
+  renderProfile(); toast('Display name updated.');
+});
+
+route();
+</script>
+</body>
+</html>
