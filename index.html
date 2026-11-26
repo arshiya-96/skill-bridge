@@ -198,22 +198,15 @@ footer{text-align:center;color:var(--muted);padding:32px 20px;font-size:.88rem}
    bodies of load()/save() (or make them async fetch() calls) — the UI
    code below doesn't need to change.
    ===================================================================== */
-const KEY = 'skillbridge:v1';
+const KEY = 'skillbridge:v2';
 const CATS = ['Programming', 'Design', 'Data', 'Communication', 'Productivity'];
 const ICON = {Programming:'💻', Design:'🎨', Data:'📊', Communication:'🎤', Productivity:'⚡'};
 
 // Demo data. `owner:'me'` marks skills published by the current user.
 const seed = () => ({
-  user: {name: 'Guest Student'},
-  connections: [],               // ids of skills the user connected to
-  skills: [
-    {id:'s1', name:'Python Programming', category:'Programming', level:'Intermediate', student:'Aarav Mehta', description:'Learn Python fundamentals, loops, functions and build small automation scripts.', connects:42},
-    {id:'s2', name:'Java Programming', category:'Programming', level:'Advanced', student:'Riya Sharma', description:'Object-oriented design, collections and problem solving for placements.', connects:31},
-    {id:'s3', name:'UI/UX Design', category:'Design', level:'Intermediate', student:'Kabir Nair', description:'Wireframes, Figma prototypes and design thinking for real student projects.', connects:38},
-    {id:'s4', name:'Public Speaking', category:'Communication', level:'Beginner', student:'Meera Iyer', description:'Beat stage fear, structure a talk and deliver confident presentations.', connects:27},
-    {id:'s5', name:'Excel Basics', category:'Productivity', level:'Beginner', student:'Rohan Das', description:'Formulas, pivot tables and charts to organise assignments and data.', connects:24},
-    {id:'s6', name:'Data Analysis', category:'Data', level:'Intermediate', student:'Sana Khan', description:'Clean, explore and visualise datasets using pandas and simple statistics.', connects:35}
-  ]
+  user:{name:'New Student'},
+  connections: [],
+  skills: []
 });
 
 const Repo = {
@@ -369,6 +362,19 @@ document.addEventListener('submit', e => {
 });
 
 route();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "eankrbpnslzmakfungaf".supabase.co;
+const SUPABASE_KEY = "sb_publishable_izmpY-v9XvYNQOp2Cv1tnA_6nE6QgE0";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+console.log("Skill Bridge Supabase initialized!");
 </script>
 </body>
 </html>
