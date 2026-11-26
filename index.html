@@ -373,18 +373,20 @@ const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
-route();
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+async function testDatabase() {
+    const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('*');
 
-<script>
-const SUPABASE_URL = "eankrbpnslzmakfungaf.supabase.co";
-const SUPABASE_KEY = "sb_publishable_izmpY-v9XvYNQOp2Cv1tnA_6nE6QgE0";
+    if (error) {
+        console.log("Database error:", error.message);
+    } else {
+        console.log("Database connected successfully!");
+        console.log("Profiles:", data);
+    }
+}
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+testDatabase();
 console.log("Skill Bridge Supabase initialized!");
 </script>
 </body>
