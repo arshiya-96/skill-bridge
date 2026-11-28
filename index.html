@@ -373,6 +373,56 @@ const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
+
+  
+// SKILL BRIDGE AUTHENTICATION
+
+async function studentSignup(fullName, college, email, password) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName,
+        college: college
+      }
+    }
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("Registration successful! Please check your email for confirmation.");
+}
+
+async function studentLogin(email, password) {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("Welcome to Skill Bridge!");
+  location.reload();
+}
+
+async function studentLogout() {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  location.reload();
+}
+
 async function testDatabase() {
     const { data, error } = await supabaseClient
         .from('profiles')
